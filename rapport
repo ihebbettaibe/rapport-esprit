@@ -1,0 +1,2413 @@
+\documentclass[12pt,a4paper,oneside]{report}
+
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{lmodern}
+\usepackage{appendix}
+\usepackage{lettrine}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning}
+
+% Geometry avec marges optimisées
+\geometry{
+    top=2.5cm,
+    bottom=2.5cm,
+    left=3cm,
+    right=2.5cm
+}
+
+% Couleurs personnalisées
+\definecolor{primaryblue}{RGB}{0,51,102}
+\definecolor{secondaryblue}{RGB}{51,102,153}
+\definecolor{lightgray}{RGB}{245,245,245}
+\definecolor{darkgray}{RGB}{100,100,100}
+\definecolor{accentgreen}{RGB}{46,125,50}
+\definecolor{accentred}{RGB}{198,40,40}
+\definecolor{lightyellow}{RGB}{255,248,220}
+\definecolor{lightblue}{RGB}{230,240,255}
+\definecolor{lightgreen}{RGB}{240,255,240}
+
+% Configuration des tableaux
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+% Fancyhdr config
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\textcolor{primaryblue}{\small\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Plain pages (chapters)
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \fancyfoot[C]{\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryblue,
+    filecolor=magenta,      
+    urlcolor=secondaryblue,
+    citecolor=accentgreen,
+    pdftitle={Rapport PFE - FleetPulse},
+    pdfauthor={Wissal Bahri}
+}
+
+% Listings setup
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{primaryblue}\bfseries,
+    commentstyle=\color{accentgreen}\itshape,
+    stringstyle=\color{accentred},
+    numbers=left,
+    numberstyle=\tiny\color{darkgray},
+    frame=single,
+    backgroundcolor=\color{lightgray},
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=4,
+    captionpos=b
+}
+
+% Line spacing
+\onehalfspacing
+
+% Personnalisation des titres de chapitres
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries\color{primaryblue}}
+{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{-20pt}{40pt}
+
+% Personnalisation des sections
+\titleformat{\section}
+{\normalfont\Large\bfseries\color{primaryblue}}
+{\thesection}{1em}{}
+\titleformat{\subsection}
+{\normalfont\large\bfseries\color{secondaryblue}}
+{\thesubsection}{1em}{}
+
+% Environnements personnalisés
+\newtcolorbox{importantbox}[1][Important]{
+    colback=lightyellow,
+    colframe=accentred,
+    fonttitle=\bfseries,
+    title=#1,
+    arc=3mm,
+    boxrule=1.5pt
+}
+
+\newtcolorbox{objectivebox}{
+    colback=lightblue,
+    colframe=primaryblue,
+    fonttitle=\bfseries,
+    title=\faIcon{bullseye} Objectifs,
+    arc=2mm,
+    boxrule=1pt
+}
+
+\newtcolorbox{technicalbox}{
+    colback=lightgreen,
+    colframe=accentgreen,
+    fonttitle=\bfseries,
+    title=Détails Techniques,
+    arc=2mm,
+    boxrule=1pt
+}
+
+\newtcolorbox{keyfeaturebox}{
+    colback=lightgray,
+    colframe=secondaryblue,
+    fonttitle=\bfseries,
+    title=Fonctionnalités Clés,
+    arc=2mm,
+    boxrule=1pt
+}
+
+\begin{document}
+
+% ================================================================
+% PAGE DE GARDE
+% ================================================================
+\begin{titlepage}
+    \centering
+    
+    {\large \textbf{École Supérieure Privée d'Ingénierie et de Technologie}\\[0.1cm]}
+    \vspace{1.5cm}
+    
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{Logo_ESPRIT_Ariana.jpg}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.5\textwidth]{d6ed8552-9a0d-4e67-9640-da2d7a06bbb2.jpg}
+    \end{minipage}
+    
+    \vspace{1.5cm}
+    
+    {\fontsize{42}{50}\selectfont\bfseries\color{accentred} RAPPORT DE STAGE\par}
+    \vspace{0.6cm}
+    {\Large\itshape En vue de l'obtention du diplôme d'ingénieur en informatique\par}
+    
+    \vspace{1cm}
+    
+    {\LARGE\bfseries Parcours : Génie Logiciel\par}
+    \vspace{0.4cm}
+    \rule{0.65\textwidth}{1pt}
+    
+    \vspace{1.5cm}
+    
+    \begin{minipage}{0.85\textwidth}
+        \centering
+        {\Large\textbf{Application de gestion de flotte et navigation intelligente pour poids lourds}}
+    \end{minipage}
+    
+    \vspace{1.5cm}
+    
+    \begin{flushleft}
+        {\large \textbf{Soutenu le :} \hspace{1.5cm} 2025}\\[0.8cm]
+        {\large \textbf{Réalisé par :} \hspace{1cm} \textbf{\Large Wissal Bahri}}\\[0.8cm]
+        {\large \textbf{Période de stage :} 1 Février -- 30 Juin 2025}
+    \end{flushleft}
+    
+    \vfill
+    
+    \centering
+    {\large\bfseries Année universitaire 2024 / 2025\par}
+\end{titlepage}
+
+% Page d'encadrement
+\newpage
+\thispagestyle{empty}
+\vspace*{3cm}
+\begin{flushleft}
+    {\large \textbf{Encadrant technique :} Fahmi Kharroubi}\\
+    \textit{Directeur Technique, ExypnoTech Engineering Services}\\[3cm]
+    \rule{8cm}{0.4pt} \\
+    \textit{Signature}\\[2.5cm]
+    
+    {\large \textbf{Encadrant académique :} Sinda Belhaj Daouad}\\
+    \textit{Professeur, ESPRIT}\\[3cm]
+    \rule{8cm}{0.4pt} \\
+    \textit{Signature}
+\end{flushleft}
+\vfill
+
+% ================================================================
+% REMERCIEMENTS
+% ================================================================
+\chapter*{Remerciements}
+\addcontentsline{toc}{chapter}{Remerciements}
+
+Au terme de ce projet de fin d'études, je tiens à exprimer ma gratitude la plus sincère envers toutes celles et ceux qui ont contribué, de près ou de loin, à la réalisation de ce travail et qui m'ont soutenu tout au long de ce parcours.
+
+Je remercie en premier lieu \textbf{ExypnoTech Engineering Services} pour m'avoir offert l'opportunité de mener ce projet dans un environnement professionnel innovant, dynamique et exigeant. Cette expérience m'a permis de développer mes compétences, de confronter mes acquis théoriques à des problématiques réelles, et de renforcer ma vision du monde de l'ingénierie et de l'innovation.
+
+J'adresse également mes remerciements les plus chaleureux à \textbf{Sinda Belhaj Daouad}, mon encadrante académique, pour son accompagnement, ses conseils éclairés et son suivi rigoureux, ainsi qu'à \textbf{Fehmi Kharroubi}, mon encadrant professionnel, pour sa disponibilité, sa confiance et ses recommandations précieuses. Leur soutien a été un pilier essentiel pour mener à bien ce projet.
+
+Je souhaite aussi exprimer toute ma reconnaissance à mes parents, pour leur patience, leurs sacrifices et leur confiance indéfectible, qui ont toujours été la base de ma motivation et de ma persévérance. À mes frères, merci pour votre force tranquille et vos encouragements silencieux, et à ma grand-mère pour ses prières sincères et ses bénédictions constantes, qui m'ont accompagné à chaque étape de mon parcours.
+
+Enfin, je n'oublie pas mes amis et mes proches, dont la présence, l'écoute et le soutien m'ont permis d'affronter les moments difficiles et de rendre cette expérience bien plus enrichissante et mémorable.
+
+Ce projet ne représente pas uniquement une réussite académique, mais aussi le fruit d'un engagement collectif, d'un accompagnement bienveillant et d'un réseau de confiance et de solidarité. À toutes et à tous, je vous adresse mes remerciements les plus profonds.
+
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+\newpage
+
+% ================================================================
+% LISTE DES ABRÉVIATIONS
+% ================================================================
+\chapter*{Liste des Abréviations}
+\addcontentsline{toc}{chapter}{Liste des Abréviations}
+
+\begin{tabular}{ll}
+\textbf{API} & Application Programming Interface \\
+\textbf{CRUD} & Create, Read, Update, Delete \\
+\textbf{E2E} & End-to-End \\
+\textbf{ERP} & Enterprise Resource Planning \\
+\textbf{GPS} & Global Positioning System \\
+\textbf{HTTP} & HyperText Transfer Protocol \\
+\textbf{IoT} & Internet of Things \\
+\textbf{JSON} & JavaScript Object Notation \\
+\textbf{JWT} & JSON Web Token \\
+\textbf{KPI} & Key Performance Indicator \\
+\textbf{MERN} & MongoDB, Express.js, React.js, Node.js \\
+\textbf{MVC} & Model-View-Controller \\
+\textbf{NoSQL} & Not Only SQL \\
+\textbf{RBAC} & Role-Based Access Control \\
+\textbf{REST} & Representational State Transfer \\
+\textbf{RGPD} & Règlement Général sur la Protection des Données \\
+\textbf{SaaS} & Software as a Service \\
+\textbf{UI/UX} & User Interface / User Experience \\
+\textbf{WebSocket} & Protocol de communication bidirectionnel \\
+\end{tabular}
+
+\newpage
+
+% ================================================================
+% INTRODUCTION GÉNÉRALE
+% ================================================================
+\chapter*{Introduction Générale}
+\addcontentsline{toc}{chapter}{Introduction Générale}
+
+\lettrine[lines=3]{L}{e secteur du transport routier} joue un rôle crucial dans le développement économique des nations, en assurant l'approvisionnement des marchés, la distribution des marchandises et le bon fonctionnement des chaînes logistiques. Les poids lourds constituent une composante essentielle de ce système, reliant les centres de production aux zones de consommation et soutenant la compétitivité des entreprises.
+
+\section*{Contexte et Enjeux}
+
+Au cours de ces dernières années, la croissance rapide du commerce international, l'essor du e-commerce et l'évolution des normes de sécurité et de durabilité ont profondément transformé le secteur du transport. Aujourd'hui, les entreprises doivent gérer des volumes de données de plus en plus complexes tout en répondant à des attentes croissantes en matière d'efficacité, de traçabilité et de respect de l'environnement.
+
+Dans ce contexte, la gestion de flotte et la navigation intelligente sont devenues des enjeux centraux. Les acteurs du transport doivent non seulement assurer un suivi en temps réel de leurs véhicules, mais aussi :
+
+\begin{itemize}[leftmargin=2cm]
+    \item Optimiser les itinéraires et réduire les coûts opérationnels
+    \item Surveiller la consommation de carburant et l'empreinte carbone
+    \item Anticiper les besoins de maintenance préventive
+    \item Garantir la sécurité des chauffeurs et des marchandises
+    \item Assurer une traçabilité complète des opérations
+\end{itemize}
+
+\section*{Transformation Digitale}
+
+La transformation digitale du secteur s'impose comme une nécessité stratégique. L'intelligence artificielle, l'Internet des Objets (IoT) et les technologies de géolocalisation représentent aujourd'hui des outils clés pour :
+
+\begin{enumerate}
+    \item Automatiser la collecte et le traitement des données
+    \item Améliorer la prise de décision en temps réel
+    \item Accroître la performance opérationnelle
+    \item Réduire les coûts et optimiser les ressources
+\end{enumerate}
+
+\section*{Objectif du Projet}
+
+Le présent projet s'inscrit dans cette dynamique de transformation. Il consiste à concevoir et développer \textbf{FleetPulse}, une application web intégrée de \textbf{gestion de flotte et de navigation intelligente pour poids lourds}, combinant des modèles d'optimisation et des technologies avancées.
+
+\begin{objectivebox}
+L'objectif principal est d'accroître la rapidité, la précision et l'efficacité des opérations de transport, tout en répondant aux exigences modernes de sécurité, de durabilité et de compétitivité, avec une solution adaptée au contexte tunisien et nord-africain.
+\end{objectivebox}
+
+\section*{Structure du Rapport}
+
+Ce rapport s'articule autour de six chapitres complémentaires :
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|c|L{4cm}|X|}
+\hline
+\rowcolor{lightgray}
+\textbf{Chapitre} & \textbf{Titre} & \textbf{Contenu Principal} \\
+\hline
+\textbf{1} & Cadre Général du Projet & Présentation de l'organisme d'accueil, étude de l'existant, problématique et méthodologie \\
+\hline
+\textbf{2} & Analyse et Spécification & Identification des acteurs, besoins fonctionnels et non fonctionnels, architecture système \\
+\hline
+\textbf{3} & Sprint 1 & Authentification et gestion des utilisateurs \\
+\hline
+\textbf{4} & Sprint 2 & Gestion de la flotte et des chauffeurs \\
+\hline
+\textbf{5} & Sprint 3 & Messagerie, notifications et reporting \\
+\hline
+\textbf{6} & Sprint 4 et 5 & Administration avancée, reporting planifié et chatbot IA \\
+\hline
+\end{tabularx}
+\caption{Structure détaillée du rapport}
+\end{table}
+
+\vspace{1cm}
+Chaque chapitre présente une analyse approfondie, des diagrammes conceptuels UML, des spécifications techniques détaillées et des réalisations concrètes, illustrant la progression méthodique du projet de sa conception à sa mise en œuvre opérationnelle.
+
+% ================================================================
+% CHAPITRE 1 : CADRE GÉNÉRAL DU PROJET
+% ================================================================
+\chapter{Cadre Général du Projet}
+
+\section*{Introduction}
+
+Le transport routier représente la colonne vertébrale des échanges commerciaux en Tunisie comme dans le reste du monde. Sa fiabilité, son efficacité et sa capacité d'adaptation conditionnent directement la compétitivité des entreprises et leur résilience face aux défis économiques contemporains.
+
+Toutefois, ce secteur stratégique fait face à de profonds bouleversements liés à la révolution des technologies numériques, aux pressions économiques structurelles (hausse des coûts opérationnels, pénurie chronique de chauffeurs qualifiés), ainsi qu'aux impératifs environnementaux croissants.
+
+Ce chapitre introductif a pour objectif d'encadrer le projet dans son environnement de réalisation en présentant l'entreprise \textbf{ExypnoTech Engineering Services} et son écosystème stratégique. En outre, la partie métier situe le projet dans son contexte à travers une étude critique de l'existant. Enfin, la méthodologie du travail adoptée pour la mise en place de la solution logicielle est présentée.
+
+\section{Organisme d'Accueil}
+
+\subsection{Présentation de l'Organisation d'Accueil}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{d6ed8552-9a0d-4e67-9640-da2d7a06bbb2.jpg}
+\caption{Logo ExypnoTech Engineering Services}
+\end{figure}
+
+\textbf{ExypnoTech Engineering Services} a été fondée en mars 2023 à Monastir (Tunisie), un pôle technologique en pleine expansion, par deux ingénieurs visionnaires : \textbf{Wajih El Hadj Youssef} (PDG) et \textbf{Fehmi Kharroubi} (Directeur Technique).
+
+L'entreprise est née d'un constat partagé : de nombreuses industries tunisiennes et nord-africaines demeurent dépendantes de processus manuels peu efficaces et de systèmes d'information fragmentés, alors qu'elles pourraient tirer un avantage compétitif significatif des technologies embarquées, de l'IoT et de l'intelligence artificielle.
+
+\subsubsection{Fiche d'Identité de l'Entreprise}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{4cm}|X|}
+\hline
+\rowcolor{lightblue}
+\textbf{Attribut} & \textbf{Information} \\
+\hline
+\textbf{Raison sociale} & ExypnoTech Engineering Services \\
+\hline
+\textbf{Date de création} & Mars 2023 \\
+\hline
+\textbf{Siège social} & Monastir, Tunisie \\
+\hline
+\textbf{Forme juridique} & SARL (Société à Responsabilité Limitée) \\
+\hline
+\textbf{Secteur d'activité} & Ingénierie logicielle et solutions IoT \\
+\hline
+\textbf{Effectif} & 4 collaborateurs permanents + réseau de consultants \\
+\hline
+\textbf{Fondateurs} & Wajih El Hadj Youssef (PDG), Fehmi Kharroubi (CTO) \\
+\hline
+\textbf{Site web} & www.exypnotech.com \\
+\hline
+\end{tabularx}
+\caption{Fiche d'identité d'ExypnoTech Engineering Services}
+\end{table}
+
+\subsubsection{Historique et Évolution}
+
+La trajectoire d'ExypnoTech illustre l'agilité des startups technologiques. Initialement spécialisée dans le secteur de l'aquaculture intelligente — avec le développement de solutions de monitoring des bassins, de gestion automatisée de l'alimentation et de suivi de la qualité de l'eau — l'entreprise a rapidement diversifié son expertise vers :
+
+\begin{itemize}
+    \item \textbf{La logistique et le transport :} systèmes de suivi de flotte, optimisation d'itinéraires
+    \item \textbf{L'agriculture de précision :} capteurs IoT, irrigation intelligente
+    \item \textbf{L'industrie 4.0 :} maintenance prédictive, optimisation de production
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|C{2.5cm}|X|}
+\hline
+\rowcolor{lightgreen}
+\textbf{Période} & \textbf{Étapes Clés} \\
+\hline
+\textbf{Mars 2023} & Création de l'entreprise et lancement du premier projet (aquaculture) \\
+\hline
+\textbf{Juin 2023} & Adhésion au programme ActInCube d'Actia Engineering Services \\
+\hline
+\textbf{Sept. 2023} & Diversification vers la logistique et signature du premier contrat transport \\
+\hline
+\textbf{Déc. 2023} & Développement d'un MVP pour une solution de gestion de flotte \\
+\hline
+\textbf{Fév. 2024} & Extension de l'équipe (2 développeurs supplémentaires) \\
+\hline
+\textbf{Fév. 2025} & Lancement du projet FleetPulse (PFE présent) \\
+\hline
+\end{tabularx}
+\caption{Chronologie de l'évolution d'ExypnoTech}
+\end{table}
+
+\subsubsection{Mission et Vision}
+
+\begin{importantbox}[Mission d'ExypnoTech]
+\textit{"Transformer les défis industriels en solutions technologiques intelligentes."}
+
+Plus concrètement, l'entreprise développe des systèmes intégrés adaptés aux contraintes techniques, financières et humaines des entreprises nord-africaines, en privilégiant l'innovation accessible et la proximité client.
+\end{importantbox}
+
+\textbf{Vision stratégique à horizon 2030 :}
+\begin{enumerate}
+    \item Devenir un acteur incontournable de l'ingénierie numérique en Afrique du Nord
+    \item Proposer des solutions aux standards internationaux adaptées au contexte local
+    \item Contribuer à la transformation digitale de 100+ entreprises régionales
+    \item Développer une R\&D forte en IA et IoT appliqués
+\end{enumerate}
+
+\subsection{Partenariat Stratégique : Le Programme ActInCube}
+
+ExypnoTech bénéficie d'un accompagnement via le programme \textbf{ActInCube}, incubateur technologique piloté par \textbf{Actia Engineering Services}, filiale du groupe français ACTIA.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.35\textwidth]{ACTinCube_AgroImpact.png}
+\hspace{1cm}
+\includegraphics[width=0.35\textwidth]{ALATI.PA_BIG-b26662f4.png}
+\caption{Logos des partenaires ActInCube et ACTIA}
+\end{figure}
+
+\subsubsection{Avantages du Partenariat}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{3.5cm}|X|}
+\hline
+\rowcolor{lightblue}
+\textbf{Dimension} & \textbf{Bénéfices Apportés} \\
+\hline
+\textbf{Appui Technique} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Accès à l'expertise d'Actia en systèmes embarqués
+    \item Utilisation de laboratoires équipés
+    \item Formation aux méthodologies de développement éprouvées
+    \item Support technique sur technologies complexes
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Accompagnement Business} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Structuration de l'offre commerciale
+    \item Mise en réseau avec clients potentiels
+    \item Préparation aux levées de fonds
+    \item Coaching entrepreneurial personnalisé
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Crédibilité} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Association avec un groupe international reconnu
+    \item Label de qualité pour les prospects
+    \item Facilitation d'accès aux grands comptes
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Ouverture Internationale} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Participation à des salons européens
+    \item Opportunités de partenariats étrangers
+    \item Veille technologique internationale
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\end{tabularx}
+\caption{Bénéfices détaillés du partenariat ActInCube}
+\end{table}
+
+\subsubsection{Organisation et Capital Humain}
+
+L'entreprise adopte une structure horizontale et agile avec \textbf{4 collaborateurs permanents} et un réseau de consultants spécialisés.
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{4cm}|L{3cm}|X|}
+\hline
+\rowcolor{lightgray}
+\textbf{Rôle} & \textbf{Effectif} & \textbf{Responsabilités Principales} \\
+\hline
+\textbf{Direction générale} & 1 & Stratégie, relations partenaires, développement commercial \\
+\hline
+\textbf{Direction technique} & 1 & R\&D, architecture logicielle, encadrement projets \\
+\hline
+\textbf{Ingénieurs développement} & 2 & Conception, implémentation, tests, documentation \\
+\hline
+\textbf{Experts externes} & Variable & Compétences spécialisées selon besoins projets (IA, IoT, UX) \\
+\hline
+\end{tabularx}
+\caption{Répartition des rôles au sein d'ExypnoTech}
+\end{table}
+
+\section{Étude de l'Existant}
+
+\subsection{Contexte Sectoriel : Le Transport Routier en Tunisie}
+
+Le transport routier domine les flux logistiques tunisiens avec plus de \textbf{70\%} des marchandises transportées, grâce à sa flexibilité et à la densité du réseau routier national.
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{4cm}|C{2.5cm}|X|}
+\hline
+\rowcolor{lightblue}
+\textbf{Indicateur} & \textbf{Valeur} & \textbf{Source / Remarque} \\
+\hline
+Part du transport routier & 70\% & Ministère du Transport (2023) \\
+\hline
+Nombre d'entreprises & 8000+ & Fédération Nationale du Transport (2024) \\
+\hline
+Emplois directs & 45000+ & Office National des Statistiques \\
+\hline
+CA annuel du secteur & 2.5 Mds TND & Estimation 2023 \\
+\hline
+Taux de croissance annuel & 3-5\% & Moyenne sur 5 ans \\
+\hline
+\end{tabularx}
+\caption{Chiffres clés du transport routier en Tunisie}
+\end{table}
+
+\subsubsection{Défis Structurels du Secteur}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{3.5cm}|X|}
+\hline
+\rowcolor{accentred!30}
+\textbf{Catégorie} & \textbf{Problèmes Identifiés} \\
+\hline
+\textbf{Infrastructure} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Routes saturées aux heures de pointe
+    \item Plateformes logistiques limitées
+    \item Maintenance insuffisante du réseau routier
+    \item Manque de parkings sécurisés pour poids lourds
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Économique} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Coûts de carburant en hausse constante (+25\% en 3 ans)
+    \item Frais de maintenance élevés (15-20\% du CA)
+    \item Accès au financement difficile pour PME
+    \item Pression sur les marges (concurrence intense)
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Digitalisation} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Suivi manuel et communication téléphonique
+    \item Faible usage des données pour la décision
+    \item Résistance au changement culturel
+    \item Manque de compétences IT en interne
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Réglementation} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Normes de sécurité en évolution
+    \item Exigences environnementales croissantes
+    \item Contrôles techniques plus stricts
+    \item Temps de travail conducteurs réglementé
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Ressources Humaines} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Pénurie de chauffeurs qualifiés
+    \item Turn-over élevé (30-40\% annuel)
+    \item Vieillissement de la population active
+    \item Formation insuffisante
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\end{tabularx}
+\caption{Défis structurels du transport routier en Tunisie}
+\end{table}
+
+\subsection{Critique de l'Existant}
+
+Une analyse comparative des solutions actuellement utilisées révèle des lacunes importantes en termes de fonctionnalités, d'intégration et d'adaptabilité au contexte local.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|L{3cm}|L{3.5cm}|L{3.5cm}|L{3.5cm}|}
+\hline
+\rowcolor{lightgray}
+\textbf{Solution} & \textbf{Avantages} & \textbf{Inconvénients} & \textbf{Coût Annuel} \\
+\hline
+\textbf{Gestion Manuelle (Excel)} & 
+\begin{minipage}[t]{3.5cm}
+\vspace{2pt}
+• Coût faible\\
+• Familiarité\\
+• Pas de formation requise
+\vspace{2pt}
+\end{minipage} & 
+\begin{minipage}[t]{3.5cm}
+\vspace{2pt}
+• Erreurs fréquentes\\
+• Absence de temps réel\\
+• Pas de traçabilité\\
+• Consolidation difficile
+\vspace{2pt}
+\end{minipage} & 
+\textless 500 TND \\
+\hline
+\textbf{GPS Basiques} & 
+\begin{minipage}[t]{3.5cm}
+\vspace{2pt}
+• Localisation simple\\
+• Installation rapide\\
+• Prix abordable
+\vspace{2pt}
+\end{minipage} & 
+\begin{minipage}[t]{3.5cm}
+\vspace{2pt}
+• Pas d'analyse\\
+• Historique limité\\
+• Pas d'alertes\\
+• Interface basique
+\vspace{2pt}
+\end{minipage} & 
+2000-3000 TND \\
+\hline
+\textbf{Coordination Téléphonique} & 
+\begin{minipage}[t]{3.5cm}
+\vspace{2pt}
+• Communication directe\\
+• Flexibilité\\
+• Pas d'infrastructure IT
+\vspace{2pt}
+\end{minipage} & 
+\begin{minipage}[t]{3.5cm}
+\vspace{2pt}
+• Risque d'erreurs\\
+• Absence traçabilité\\
+• Chronophage\\
+• Coûts télécom élevés
+\vspace{2pt}
+\end{minipage} & 
+1500-2500 TND \\
+\hline
+\textbf{Solutions Internationales (Fleet Complete, Verizon)} & 
+\begin{minipage}[t]{3.5cm}
+\vspace{2pt}
+• Fonctionnalités avancées\\
+• Support technique\\
+• Mises à jour régulières
+\vspace{2pt}
+\end{minipage} & 
+\begin{minipage}[t]{3.5cm}
+\vspace{2pt}
+• Coûts prohibitifs\\
+• Complexité\\
+• Inadaptation locale\\
+• Langue (anglais)
+\vspace{2pt}
+\end{minipage} & 
+15000-25000 TND \\
+\hline
+\end{tabularx}
+\caption{Analyse comparative des solutions existantes}
+\end{table}
+
+\begin{importantbox}[Constat Principal]
+Les solutions existantes présentent soit un coût prohibitif pour les PME tunisiennes, soit des fonctionnalités trop limitées pour répondre aux besoins opérationnels réels. Il existe un besoin clair pour une solution intermédiaire : complète, moderne, mais économiquement accessible.
+\end{importantbox}
+
+\subsection{Enjeux Stratégiques}
+
+Les transporteurs doivent relever cinq défis majeurs pour rester compétitifs :
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|c|L{4cm}|X|C{2.5cm}|}
+\hline
+\rowcolor{primaryblue!30}
+\textbf{\#} & \textbf{Enjeu} & \textbf{Description} & \textbf{Impact} \\
+\hline
+1 & \textbf{Optimisation des coûts} & Réduction carburant, maintenance prédictive, optimisation itinéraires & 15-20\% d'économies \\
+\hline
+2 & \textbf{Amélioration ponctualité} & Respect des délais, satisfaction client, réputation & +25\% satisfaction \\
+\hline
+3 & \textbf{Renforcement sécurité} & Réduction accidents, conformité réglementaire, protection conducteurs & -30\% incidents \\
+\hline
+4 & \textbf{Impact environnemental} & Réduction CO2, conformité normes, image responsable & -20\% émissions \\
+\hline
+5 & \textbf{Différenciation digitale} & Avantage concurrentiel, attractivité clients, modernité & Avantage stratégique \\
+\hline
+\end{tabularx}
+\caption{Enjeux stratégiques pour les entreprises de transport}
+\end{table}
+
+\subsection{Tendances Technologiques}
+
+Le secteur du transport connaît une transformation digitale accélérée, portée par plusieurs technologies émergentes :
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{3.5cm}|X|L{3cm}|}
+\hline
+\rowcolor{accentgreen!30}
+\textbf{Technologie} & \textbf{Applications dans le Transport} & \textbf{Maturité} \\
+\hline
+\textbf{Internet des Objets (IoT)} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Capteurs de température\\
+• Monitoring véhicules\\
+• Géolocalisation avancée\\
+• Télématique embarquée
+\vspace{2pt}
+\end{minipage} & 
+Mature \\
+\hline
+\textbf{Big Data \& Analytics} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Analyse comportements\\
+• KPI avancés\\
+• Prévisions demande\\
+• Optimisation globale
+\vspace{2pt}
+\end{minipage} & 
+En croissance \\
+\hline
+\textbf{Intelligence Artificielle} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Maintenance prédictive\\
+• Optimisation routes\\
+• Chatbots assistance\\
+• Détection anomalies
+\vspace{2pt}
+\end{minipage} & 
+Émergente \\
+\hline
+\textbf{Connectivité 4G/5G} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Communication temps réel\\
+• Streaming données\\
+• Mises à jour OTA\\
+• Collaboration mobile
+\vspace{2pt}
+\end{minipage} & 
+Mature \\
+\hline
+\textbf{Cloud Computing} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• SaaS accessible\\
+• Scalabilité\\
+• Sauvegarde automatique\\
+• Accès multi-devices
+\vspace{2pt}
+\end{minipage} & 
+Mature \\
+\hline
+\end{tabularx}
+\caption{Technologies émergentes et leur application au transport}
+\end{table}
+
+\section{Problématique}
+
+\subsection{Formulation Détaillée}
+
+Suite à l'analyse de l'existant et des enjeux sectoriels, la problématique centrale du projet se formule comme suit :
+
+\begin{importantbox}[Problématique Centrale]
+\textit{"Comment concevoir et développer une application web intégrée, économiquement accessible et technologiquement robuste, capable de gérer efficacement une flotte de poids lourds, d'optimiser dynamiquement les trajets, et de fournir des indicateurs décisionnels pertinents, tout en étant adaptée au marché tunisien et nord-africain ?"}
+\end{importantbox}
+
+Cette problématique se décline en plusieurs sous-questions opérationnelles :
+
+\begin{enumerate}
+    \item Comment centraliser et sécuriser les données de flotte en temps réel ?
+    \item Comment offrir une interface intuitive pour différents profils utilisateurs ?
+    \item Comment intégrer des fonctionnalités avancées (messagerie, reporting, IA) ?
+    \item Comment garantir la scalabilité et la maintenabilité du système ?
+    \item Comment proposer un modèle économique viable pour les PME locales ?
+\end{enumerate}
+
+\subsection{Solution Proposée}
+
+Conception et implémentation d'une \textbf{plateforme intégrée de gestion et de navigation intelligente pour poids lourds} nommée \textbf{FleetPulse}.
+
+\subsubsection{Objectifs Fonctionnels}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|c|L{4cm}|X|}
+\hline
+\rowcolor{lightblue}
+\textbf{ID} & \textbf{Objectif} & \textbf{Description Détaillée} \\
+\hline
+OF1 & Centralisation des données & Regrouper toutes les informations véhicules, conducteurs, trajets dans une base unique et sécurisée \\
+\hline
+OF2 & Système d'alertes intelligent & Notifications automatiques pour événements critiques (maintenance, incidents, retards) \\
+\hline
+OF3 & Reporting analytique & Génération de rapports personnalisés avec KPI et visualisations graphiques \\
+\hline
+OF4 & Optimisation trajets & Calcul d'itinéraires optimaux en temps réel avec prise en compte du trafic \\
+\hline
+OF5 & Communication intégrée & Messagerie interne temps réel entre gestionnaires et conducteurs \\
+\hline
+OF6 & Gestion administrative & Dématérialisation des processus (congés, réclamations, documents) \\
+\hline
+\end{tabularx}
+\caption{Objectifs fonctionnels détaillés de FleetPulse}
+\end{table}
+
+\subsubsection{Objectifs Techniques}
+
+\begin{technicalbox}
+\textbf{Architecture Technique Cible :}
+\begin{itemize}
+    \item \textbf{Frontend :} React.js + TypeScript (interface responsive)
+    \item \textbf{Backend :} Node.js + Express.js (API RESTful)
+    \item \textbf{Base de données :} MongoDB (NoSQL scalable)
+    \item \textbf{Temps réel :} Socket.IO (WebSocket)
+    \item \textbf{Cache :} Redis (performance optimisée)
+    \item \textbf{Sécurité :} JWT, HTTPS, RBAC, validation entrées
+    \item \textbf{Cartographie :} Google Maps API / Leaflet
+    \item \textbf{IA :} Flask microservice pour chatbot
+\end{itemize}
+\end{technicalbox}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{4cm}|X|C{2cm}|}
+\hline
+\rowcolor{lightgreen}
+\textbf{Objectif Technique} & \textbf{Critères de Réussite} & \textbf{Priorité} \\
+\hline
+Architecture modulaire & Séparation claire des couches (MVC), composants réutilisables & Haute \\
+\hline
+Performance & Temps de réponse \textless 2s, latence WebSocket \textless 500ms & Haute \\
+\hline
+Sécurité & Authentification JWT, HTTPS, RBAC, protection CSRF & Critique \\
+\hline
+Scalabilité & Support 1000+ véhicules, 5000+ utilisateurs simultanés & Moyenne \\
+\hline
+Disponibilité & Uptime \textgreater 99\%, backups automatiques & Haute \\
+\hline
+Maintenabilité & Code documenté, tests \textgreater 80\% couverture & Haute \\
+\hline
+\end{tabularx}
+\caption{Objectifs techniques et critères de réussite}
+\end{table}
+
+\subsubsection{Objectifs Organisationnels et Business}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{4.5cm}|C{2.5cm}|X|}
+\hline
+\rowcolor{accentred!30}
+\textbf{Indicateur} & \textbf{Cible} & \textbf{Méthode de Mesure} \\
+\hline
+Réduction des coûts opérationnels & 15--20\% & Analyse comparative avant/après (carburant, maintenance) \\
+\hline
+Amélioration de la ponctualité & 95\% & Taux de livraisons dans les délais prévus \\
+\hline
+Réduction des incidents & -30\% & Nombre d'accidents et pannes évitables \\
+\hline
+Gain de productivité administrative & 40\% & Temps économisé sur tâches manuelles \\
+\hline
+Satisfaction utilisateur & 4.5/5 & Enquêtes régulières auprès des utilisateurs \\
+\hline
+ROI (Return on Investment) & 12-18 mois & Calcul coûts vs bénéfices mesurables \\
+\hline
+\end{tabularx}
+\caption{Objectifs business et indicateurs de performance}
+\end{table}
+
+\section{Méthodologie}
+
+\subsection{Méthodologies Classiques : Limites Identifiées}
+
+Les méthodes prédictives traditionnelles (cascade, cycle en V) suivent une approche séquentielle rigide :
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{3cm}|X|X|}
+\hline
+\rowcolor{lightgray}
+\textbf{Méthode} & \textbf{Caractéristiques} & \textbf{Limites pour ce Projet} \\
+\hline
+\textbf{Cascade} & 
+Phases séquentielles : Analyse → Conception → Développement → Tests → Déploiement & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Rigidité face aux changements\\
+• Feedback tardif\\
+• Risques découverts en fin de projet\\
+• Inadapté aux besoins évolutifs
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Cycle en V} & 
+Phases parallèles de développement et validation, avec tests à chaque niveau & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Peu de flexibilité\\
+• Spécifications figées dès le départ\\
+• Coût élevé des modifications\\
+• Livraison unique en fin de projet
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\end{tabularx}
+\caption{Méthodes classiques et leurs limitations}
+\end{table}
+
+\subsection{Méthodologies Agiles : Analyse Comparative}
+
+L'approche agile privilégie l'itération, la collaboration et l'adaptation continue aux besoins du client.
+
+\begin{longtable}{|L{2.5cm}|L{3.5cm}|L{4cm}|L{4cm}|}
+\hline
+\rowcolor{lightblue}
+\textbf{Méthode} & \textbf{Description} & \textbf{Points Forts} & \textbf{Points Faibles} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{lightblue}
+\textbf{Méthode} & \textbf{Description} & \textbf{Points Forts} & \textbf{Points Faibles} \\
+\hline
+\endhead
+
+\textbf{Scrum} & 
+Sprints de 1-4 semaines, rôles définis (PO, SM, équipe), cérémonies régulières & 
+\begin{minipage}[t]{4cm}
+\vspace{2pt}
+• Transparence totale\\
+• Rôles clairs\\
+• Adaptabilité élevée\\
+• Livraisons fréquentes\\
+• Feedback continu
+\vspace{2pt}
+\end{minipage} & 
+\begin{minipage}[t]{4cm}
+\vspace{2pt}
+• Nécessite engagement\\
+• Scrum Master qualifié requis\\
+• Tâches bien définies\\
+• Discipline stricte
+\vspace{2pt}
+\end{minipage} \\
+\hline
+
+\textbf{Kanban} & 
+Tableau visuel continu (To Do, In Progress, Done), flux tiré sans itérations fixes & 
+\begin{minipage}[t]{4cm}
+\vspace{2pt}
+• Grande flexibilité\\
+• Visualisation claire\\
+• Limite WIP\\
+• Amélioration continue\\
+• Pas de timing imposé
+\vspace{2pt}
+\end{minipage} & 
+\begin{minipage}[t]{4cm}
+\vspace{2pt}
+• Moins structuré\\
+• Pas de deadline claire\\
+• Difficile pour grands projets\\
+• Nécessite discipline
+\vspace{2pt}
+\end{minipage} \\
+\hline
+
+\textbf{XP (Extreme Programming)} & 
+Accent sur qualité code, pair programming, TDD, intégration continue & 
+\begin{minipage}[t]{4cm}
+\vspace{2pt}
+• Code de haute qualité\\
+• Tests automatisés\\
+• Livraisons fréquentes\\
+• Refactoring continu\\
+• Satisfaction client
+\vspace{2pt}
+\end{minipage} & 
+\begin{minipage}[t]{4cm}
+\vspace{2pt}
+• Discipline très stricte\\
+• Coût initial élevé\\
+• Difficile à adopter\\
+• Pair programming coûteux
+\vspace{2pt}
+\end{minipage} \\
+\hline
+
+\caption{Comparaison détaillée des méthodes agiles}
+\end{longtable}
+
+\subsection{Méthodologie Adoptée : Scrum}
+
+\textbf{Justification du choix :} Scrum a été retenu pour sa capacité à s'adapter rapidement aux changements, impliquer le client dès le départ, et livrer de la valeur incrémentale régulièrement.
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.85\textwidth]{diagram.png}}
+\caption{Le cycle de vie Scrum appliqué au projet FleetPulse}
+\end{figure}
+
+\subsubsection{Composants de Scrum}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{3cm}|X|}
+\hline
+\rowcolor{primaryblue!30}
+\textbf{Composant} & \textbf{Description et Application au Projet} \\
+\hline
+\textbf{Sprints} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Durée : 2 semaines (10 jours ouvrés)\\
+• Objectif : livrable fonctionnel et testable\\
+• Total : 6 sprints sur 3 mois\\
+• Chaque sprint aborde un thème cohérent
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Product Backlog} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Liste priorisée de 21 user stories\\
+• 106 points de complexité totaux\\
+• Révision continue par le Product Owner\\
+• Critères d'acceptation définis
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Sprint Backlog} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Sous-ensemble du Product Backlog\\
+• Stories sélectionnées pour le sprint\\
+• Découpées en tâches techniques\\
+• Estimations en jours/personne
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Incrément} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Version fonctionnelle du produit\\
+• Potentiellement déployable\\
+• Cumulative (chaque sprint ajoute)\\
+• Respecte la "Definition of Done"
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\end{tabularx}
+\caption{Artefacts Scrum dans le contexte FleetPulse}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{3.5cm}|L{2.5cm}|X|}
+\hline
+\rowcolor{accentgreen!30}
+\textbf{Événement} & \textbf{Fréquence} & \textbf{Objectif Principal} \\
+\hline
+\textbf{Sprint Planning} & Début de sprint (4h) & Sélection user stories, définition objectif sprint, estimation tâches \\
+\hline
+\textbf{Daily Scrum} & Quotidien (15min) & Synchronisation équipe, identification obstacles, ajustements \\
+\hline
+\textbf{Sprint Review} & Fin de sprint (2h) & Démonstration incrément, collecte feedback, validation \\
+\hline
+\textbf{Sprint Retrospective} & Fin de sprint (1.5h) & Analyse processus, identification améliorations, actions correctives \\
+\hline
+\textbf{Backlog Refinement} & Mi-sprint (2h) & Clarification stories futures, re-priorisation, affinage estimations \\
+\hline
+\end{tabularx}
+\caption{Cérémonies Scrum et leur rôle dans le projet}
+\end{table}
+
+\subsubsection{Rôles Scrum}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{3cm}|L{3.5cm}|X|}
+\hline
+\rowcolor{lightgray}
+\textbf{Rôle} & \textbf{Personne} & \textbf{Responsabilités Clés} \\
+\hline
+\textbf{Product Owner} & Fehmi Kharroubi (CTO ExypnoTech) & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Vision produit\\
+• Priorisation backlog\\
+• Validation livrables\\
+• Interface avec parties prenantes\\
+• Critères d'acceptation
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Scrum Master} & Rôle rotatif (équipe technique) & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Facilitation cérémonies\\
+• Suppression obstacles\\
+• Coach méthodologique\\
+• Garant du processus Scrum\\
+• Amélioration continue
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Development Team} & Wissal Bahri + 2 développeurs & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Implémentation features\\
+• Tests (unitaires, intégration)\\
+• Qualité du code\\
+• Auto-organisation\\
+• Estimation tâches
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\end{tabularx}
+\caption{Rôles Scrum et leurs responsabilités dans FleetPulse}
+\end{table}
+
+\subsection{Valeur Ajoutée Différenciée du Projet}
+
+\subsubsection{Pour ExypnoTech Engineering Services}
+
+\begin{keyfeaturebox}
+\begin{itemize}
+    \item \textbf{Renforcement de l'expertise métier :} acquisition de compétences avancées en gestion de flotte et transport intelligent
+    \item \textbf{Produit vitrine stratégique :} démonstration de capacités techniques auprès de prospects
+    \item \textbf{Revenus récurrents :} modèle SaaS avec abonnements mensuels prévisibles
+    \item \textbf{Positionnement marché :} leadership sur le segment PME transport en Tunisie
+    \item \textbf{Base de croissance :} plateforme extensible vers autres verticales (livraison, agriculture)
+\end{itemize}
+\end{keyfeaturebox}
+
+\subsubsection{Pour les Gestionnaires de Flotte}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{4cm}|X|C{2.5cm}|}
+\hline
+\rowcolor{lightblue}
+\textbf{Bénéfice} & \textbf{Description} & \textbf{Impact Estimé} \\
+\hline
+Visibilité totale & Vue temps réel sur l'ensemble de la flotte, positions, états, missions & +50\% visibilité \\
+\hline
+Aide à la décision & Tableaux de bord KPI, reporting avancé, analyses prédictives & +40\% efficacité \\
+\hline
+Réduction des coûts & Optimisation routes, maintenance prédictive, consommation carburant & -15 à 20\% coûts \\
+\hline
+Amélioration sécurité & Alertes automatiques, suivi comportements, traçabilité complète & -30\% incidents \\
+\hline
+Conformité réglementaire & Respect temps de travail, documents à jour, audit automatisé & 100\% conformité \\
+\hline
+\end{tabularx}
+\caption{Valeur ajoutée pour les gestionnaires de flotte}
+\end{table}
+
+\subsubsection{Pour les Conducteurs}
+
+\begin{itemize}
+    \item \textbf{Interface simple et intuitive :} app mobile ergonomique, apprentissage rapide
+    \item \textbf{Gain de temps :} itinéraires optimisés, instructions claires, moins de temps perdu
+    \item \textbf{Communication fluide :} messagerie intégrée, réponses rapides, moins de malentendus
+    \item \textbf{Autonomie accrue :} accès à l'information, gestion congés, consultation historique
+    \item \textbf{Sécurité renforcée :} alertes maintenance, assistance chatbot, support 24/7
+\end{itemize}
+
+\subsubsection{Pour l'Écosystème Économique Tunisien}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{4.5cm}|X|}
+\hline
+\rowcolor{accentgreen!30}
+\textbf{Impact Sociétal} & \textbf{Description Détaillée} \\
+\hline
+\textbf{Transformation digitale sectorielle} & Accélération de l'adoption des technologies dans un secteur traditionnellement peu digitalisé, effet d'entraînement sur l'écosystème \\
+\hline
+\textbf{Création d'emplois qualifiés} & Développement de compétences IT locales, formation continue, nouveaux métiers (data analyst transport, tech support) \\
+\hline
+\textbf{Amélioration compétitivité nationale} & Entreprises tunisiennes plus efficaces, capables de concurrencer à l'international, réduction coûts logistiques \\
+\hline
+\textbf{Réduction impact environnemental} & Optimisation trajets = moins d'émissions CO2, contribution aux objectifs de développement durable de la Tunisie \\
+\hline
+\textbf{Innovation locale valorisée} & Démonstration que des solutions de qualité internationale peuvent être développées localement, fierté nationale \\
+\hline
+\end{tabularx}
+\caption{Impact du projet sur l'écosystème économique tunisien}
+\end{table}
+
+\section*{Conclusion}
+
+Ce chapitre a présenté le contexte global du projet FleetPulse en détaillant l'organisme d'accueil ExypnoTech Engineering Services, les défis structurels du transport routier tunisien, les limitations des solutions existantes et la problématique centrale du projet.
+
+L'analyse comparative a démontré le besoin clair d'une solution intermédiaire : suffisamment sophistiquée pour répondre aux besoins opérationnels réels, mais économiquement accessible aux PME locales. La méthodologie Scrum adoptée garantit une adaptation continue aux besoins utilisateurs et une livraison incrémentale de valeur.
+
+La solution proposée FleetPulse, fondée sur des objectifs clairs et mesurables (fonctionnels, techniques et business), représente un levier stratégique de transformation digitale pour le secteur du transport en Tunisie. Le chapitre suivant détaillera l'analyse et la spécification complète des besoins du système.
+
+% ================================================================
+% CHAPITRE 2 : ANALYSE ET SPÉCIFICATION DES BESOINS
+% ================================================================
+\chapter{Analyse et Spécification des Besoins}
+
+\section*{Introduction}
+
+Ce chapitre présente une analyse approfondie et structurée des besoins fonctionnels et non fonctionnels du système \textbf{FleetPulse}, ainsi que la planification détaillée du projet selon la méthodologie \textbf{Scrum}.
+
+L'objectif est de s'assurer que la solution proposée réponde efficacement aux attentes de toutes les parties prenantes, tout en respectant les contraintes techniques, organisationnelles et budgétaires.
+
+Ce chapitre aborde successivement :
+\begin{enumerate}
+    \item L'identification et la caractérisation des acteurs du système
+    \item La définition exhaustive des besoins fonctionnels et non fonctionnels
+    \item La planification des sprints avec le Product Backlog détaillé
+    \item L'architecture physique et logique du système
+    \item Les environnements de développement et technologies utilisées
+\end{enumerate}
+
+\section{Identification des Acteurs}
+
+FleetPulse s'adresse à trois types d'utilisateurs principaux, chacun ayant des rôles, des responsabilités et des besoins spécifiques dans la gestion de flotte.
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{3.5cm}|X|}
+\hline
+\rowcolor{primaryblue!30}
+\multicolumn{2}{|c|}{\textbf{\large SUPER ADMINISTRATEUR}} \\
+\hline
+\textbf{Rôle Principal} & Supervision globale et stratégique de la plateforme multi-entreprises \\
+\hline
+\textbf{Responsabilités} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Gestion des comptes entreprises et administrateurs
+    \item Configuration globale du système (paramètres, permissions, rôles)
+    \item Supervision inter-organisationnelle et rapports consolidés
+    \item Gestion des réclamations multi-organisationnelles
+    \item Approbation des nouveaux comptes et validation de documents
+    \item Audit et journalisation des actions sensibles
+    \item Maintenance et monitoring de la plateforme
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Compétences Requises} & Expertise technique, connaissance métier transport, capacité de supervision \\
+\hline
+\textbf{Fréquence d'Utilisation} & Quotidienne (monitoring), hebdomadaire (rapports), ponctuelle (incidents) \\
+\hline
+\end{tabularx}
+\caption{Profil du Super Administrateur}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{3.5cm}|X|}
+\hline
+\rowcolor{secondaryblue!30}
+\multicolumn{2}{|c|}{\textbf{\large ADMINISTRATEUR / MANAGER DE FLOTTE}} \\
+\hline
+\textbf{Rôle Principal} & Gestion opérationnelle quotidienne d'une flotte au sein d'une entreprise \\
+\hline
+\textbf{Responsabilités} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Gestion complète des chauffeurs (CRUD, documents, évaluations)
+    \item Gestion des véhicules (CRUD, maintenance, affectations)
+    \item Planification et suivi des trajets et missions
+    \item Gestion des alertes, incidents et interventions
+    \item Validation des demandes de congé et gestion RH
+    \item Analyse de performance et génération de rapports d'activité
+    \item Communication avec l'équipe et coordination opérationnelle
+    \item Suivi des KPI et optimisation des ressources
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Compétences Requises} & Gestion d'équipe, connaissance logistique, maîtrise outils bureautiques \\
+\hline
+\textbf{Fréquence d'Utilisation} & Intensive quotidienne (8-10h/jour) \\
+\hline
+\end{tabularx}
+\caption{Profil de l'Administrateur / Manager de Flotte}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{3.5cm}|X|}
+\hline
+\rowcolor{accentgreen!30}
+\multicolumn{2}{|c|}{\textbf{\large CHAUFFEUR / CONDUCTEUR}} \\
+\hline
+\textbf{Rôle Principal} & Exécution des trajets et remontée des informations terrain en temps réel \\
+\hline
+\textbf{Responsabilités} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Consultation des itinéraires assignés et instructions de mission
+    \item Mise à jour du statut de mission (en cours, terminée, incident)
+    \item Consultation de l'historique des trajets effectués
+    \item Communication interne via messagerie (dispatcher, collègues)
+    \item Soumission de demandes de congé et consultation du solde
+    \item Signalement d'incidents ou problèmes techniques
+    \item Utilisation du chatbot d'assistance pour questions courantes
+    \item Mise à jour du profil personnel et documents (permis, certificats)
+\end{itemize}
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Compétences Requises} & Conduite professionnelle, utilisation smartphone/tablette basique \\
+\hline
+\textbf{Fréquence d'Utilisation} & Quotidienne pendant les missions (accès mobile prioritaire) \\
+\hline
+\end{tabularx}
+\caption{Profil du Chauffeur / Conducteur}
+\end{table}
+
+\subsection{Matrice des Permissions par Acteur}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|L{4cm}|C{2cm}|C{2cm}|C{2cm}|}
+\hline
+\rowcolor{lightgray}
+\textbf{Fonctionnalité} & \textbf{Super Admin} & \textbf{Admin/Manager} & \textbf{Chauffeur} \\
+\hline
+Gestion comptes entreprises & \checkmark & ✗ & ✗ \\
+\hline
+Gestion utilisateurs & \checkmark & \checkmark & ✗ \\
+\hline
+Gestion véhicules & \checkmark & \checkmark & Consultation \\
+\hline
+Gestion chauffeurs & \checkmark & \checkmark & Profil perso \\
+\hline
+Planification trajets & \checkmark & \checkmark & Consultation \\
+\hline
+Suivi temps réel & \checkmark & \checkmark & Limité \\
+\hline
+Messagerie & \checkmark & \checkmark & \checkmark \\
+\hline
+Demandes congé & Approbation & Approbation & Soumission \\
+\hline
+Rapports avancés & \checkmark & \checkmark & ✗ \\
+\hline
+Configuration système & \checkmark & Limité & ✗ \\
+\hline
+Audit logs & \checkmark & ✗ & ✗ \\
+\hline
+\end{tabularx}
+\caption{Matrice de permissions RBAC (Role-Based Access Control)}
+\end{table}
+
+\section{Identification des Besoins}
+
+\subsection{Besoins Fonctionnels Détaillés}
+
+\subsubsection{BF1 : Gestion des Utilisateurs et Authentification}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{1cm}|L{4.5cm}|X|C{2cm}|}
+\hline
+\rowcolor{lightblue}
+\textbf{ID} & \textbf{Fonctionnalité} & \textbf{Description Détaillée} & \textbf{Priorité} \\
+\hline
+BF1.1 & Inscription utilisateur & Formulaire complet avec validation email, choix du rôle, vérification des données, confirmation par email & Critique \\
+\hline
+BF1.2 & Connexion sécurisée & Authentification JWT multi-rôles avec refresh tokens, session persistante, protection brute force & Critique \\
+\hline
+BF1.3 & Réinitialisation mot de passe & Processus sécurisé par email avec token temporaire (1h), validation côté serveur, historique des changements & Haute \\
+\hline
+BF1.4 & Gestion profil utilisateur & Modification informations personnelles, photo de profil, préférences système, langues & Moyenne \\
+\hline
+BF1.5 & Gestion multi-rôles & Attribution et modification dynamique des rôles, permissions granulaires (RBAC) & Critique \\
+\hline
+BF1.6 & Activation/Désactivation comptes & Suspension temporaire ou définitive, journalisation des actions, notification utilisateur & Haute \\
+\hline
+\end{tabularx}
+\caption{Besoins fonctionnels - Gestion des utilisateurs}
+\end{table}
+
+\subsubsection{BF2 : Gestion de la Flotte}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{1cm}|L{4.5cm}|X|C{2cm}|}
+\hline
+\rowcolor{lightgreen}
+\textbf{ID} & \textbf{Fonctionnalité} & \textbf{Description Détaillée} & \textbf{Priorité} \\
+\hline
+BF2.1 & CRUD véhicules & Création avec matricule unique, modification caractéristiques, archivage, recherche multicritères & Critique \\
+\hline
+BF2.2 & CRUD chauffeurs & Gestion complète avec documents (permis, assurance), validation dates expiration, alertes automatiques & Critique \\
+\hline
+BF2.3 & Attribution taxi-chauffeur & Affectation dynamique avec vérification disponibilité, historique des affectations, règles métier & Haute \\
+\hline
+BF2.4 & Gestion maintenance & Planification préventive, suivi interventions, coûts, alertes kilométrage/dates, historique complet & Haute \\
+\hline
+BF2.5 & Suivi documents véhicules & Assurance, contrôle technique, vignette, alertes expiration (J-30), upload sécurisé & Haute \\
+\hline
+BF2.6 & Statistiques flotte & Taux d'utilisation, coûts moyens, performances par véhicule, comparatifs périodiques & Moyenne \\
+\hline
+\end{tabularx}
+\caption{Besoins fonctionnels - Gestion de la flotte}
+\end{table}
+
+\subsubsection{BF3 : Suivi et Géolocalisation}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{1cm}|L{4.5cm}|X|C{2cm}|}
+\hline
+\rowcolor{lightyellow}
+\textbf{ID} & \textbf{Fonctionnalité} & \textbf{Description Détaillée} & \textbf{Priorité} \\
+\hline
+BF3.1 & Suivi GPS temps réel & Localisation live (refresh 30s), marqueurs colorés par statut, info-bulles détaillées & Critique \\
+\hline
+BF3.2 & Historique trajets & Visualisation trajets passés, replay animation, export KML/GPX, statistiques détaillées & Haute \\
+\hline
+BF3.3 & Carte interactive admin & Vue globale flotte, filtres multiples (statut, zone, chauffeur), clusters intelligents & Critique \\
+\hline
+BF3.4 & Navigation guidée chauffeur & Itinéraires optimisés Google Maps, instructions vocales, recalcul automatique, ETA dynamique & Haute \\
+\hline
+BF3.5 & Géofencing & Définition zones autorisées, alertes entrée/sortie, rapports violations, historique & Moyenne \\
+\hline
+BF3.6 & Alertes géographiques & Notifications automatiques (retard, déviation, arrêt prolongé), seuils paramétrables & Haute \\
+\hline
+\end{tabularx}
+\caption{Besoins fonctionnels - Suivi et géolocalisation}
+\end{table}
+
+\subsubsection{BF4 : Communication et Collaboration}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{1cm}|L{4.5cm}|X|C{2cm}|}
+\hline
+\rowcolor{lightblue}
+\textbf{ID} & \textbf{Fonctionnalité} & \textbf{Description Détaillée} & \textbf{Priorité} \\
+\hline
+BF4.1 & Messagerie temps réel 1:1 & Chat bidirectionnel WebSocket, indicateurs lecture, pièces jointes (10MB max), historique persistant & Haute \\
+\hline
+BF4.2 & Messagerie groupes & Conversations multi-participants, gestion membres, notifications intelligentes, recherche messages & Moyenne \\
+\hline
+BF4.3 & Notifications push & Système multicatégories (info, alerte, urgence), préférences utilisateur, badge compteur, historique & Critique \\
+\hline
+BF4.4 & Centre notifications & Interface centralisée, filtres, actions rapides, marquer tout lu, paramétrage granulaire & Haute \\
+\hline
+BF4.5 & Chatbot assistance IA & Réponses automatiques FAQ, NLP basique, escalade humain si nécessaire, apprentissage continu & Moyenne \\
+\hline
+BF4.6 & Digest notifications & Regroupement intelligent, envoi programmé (email), synthèse personnalisée & Basse \\
+\hline
+\end{tabularx}
+\caption{Besoins fonctionnels - Communication et collaboration}
+\end{table}
+
+\subsubsection{BF5 : Gestion Administrative}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{1cm}|L{4.5cm}|X|C{2cm}|}
+\hline
+\rowcolor{lightgreen}
+\textbf{ID} & \textbf{Fonctionnalité} & \textbf{Description Détaillée} & \textbf{Priorité} \\
+\hline
+BF5.1 & Demandes congé chauffeur & Formulaire avec dates, type, justificatif, validation solde, workflow approbation multi-niveaux & Haute \\
+\hline
+BF5.2 & Validation congés admin & Interface dédiée, vue calendrier équipe, vérification contraintes opérationnelles, notifications automatiques & Haute \\
+\hline
+BF5.3 & Calendrier congés & Vue globale annuelle, disponibilité équipe, conflits détectés, export iCal & Moyenne \\
+\hline
+BF5.4 & Réclamations chauffeurs & Système de tickets, catégorisation, priorités, suivi statut, commentaires, résolution & Moyenne \\
+\hline
+BF5.5 & Traitement réclamations & Workflow assignation, SLA automatisé, escalade, satisfaction post-résolution & Moyenne \\
+\hline
+BF5.6 & Gestion documents RH & Centralisation contrats, certifications, formation, dates validité, alertes renouvellement & Basse \\
+\hline
+\end{tabularx}
+\caption{Besoins fonctionnels - Gestion administrative}
+\end{table}
+
+\subsubsection{BF6 : Analyse et Reporting}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{1cm}|L{4.5cm}|X|C{2cm}|}
+\hline
+\rowcolor{lightyellow}
+\textbf{ID} & \textbf{Fonctionnalité} & \textbf{Description Détaillée} & \textbf{Priorité} \\
+\hline
+BF6.1 & Tableaux de bord KPI & Vue synthétique temps réel : véhicules actifs, missions, alertes, performances clés, graphiques interactifs & Critique \\
+\hline
+BF6.2 & Rapports activité & Génération paramétrable : période, périmètre, métriques, visualisations, comparatifs historiques & Haute \\
+\hline
+BF6.3 & Rapports maintenance & Coûts par véhicule, fréquence interventions, prédictions, ROI maintenance préventive & Haute \\
+\hline
+BF6.4 & Rapports performance chauffeurs & KPI individuels : ponctualité, incidents, consommation, évaluations, classements & Moyenne \\
+\hline
+BF6.5 & Export rapports & Formats multiples (PDF, Excel, CSV), mise en page professionnelle, envoi email automatique & Haute \\
+\hline
+BF6.6 & Planification rapports & Génération automatique récurrente (quotidien, hebdo, mensuel), distribution liste diffusion & Moyenne \\
+\hline
+BF6.7 & Analyses prédictives & ML basique : prévision pannes, optimisation maintenance, tendances consommation & Basse \\
+\hline
+\end{tabularx}
+\caption{Besoins fonctionnels - Analyse et reporting}
+\end{table}
+
+\subsection{Besoins Non Fonctionnels}
+
+\begin{longtable}{|L{3.5cm}|X|L{3cm}|}
+\hline
+\rowcolor{primaryblue!30}
+\textbf{Catégorie} & \textbf{Exigences Détaillées} & \textbf{Critères Mesurables} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{primaryblue!30}
+\textbf{Catégorie} & \textbf{Exigences Détaillées} & \textbf{Critères Mesurables} \\
+\hline
+\endhead
+
+\textbf{Performance} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Temps de réponse API \textless 2 secondes (90e percentile)
+    \item Latence WebSocket \textless 500ms pour messagerie
+    \item Chargement page principale \textless 3s (3G)
+    \item Refresh carte temps réel : 30 secondes max
+    \item Support 1000 requêtes/minute simultanées
+\end{itemize}
+\vspace{2pt}
+\end{minipage} & 
+\begin{minipage}[t]{3cm}
+\vspace{2pt}
+Tests de charge\\
+Monitoring APM\\
+Google Lighthouse\\
+New Relic / Datadog
+\vspace{2pt}
+\end{minipage} \\
+\hline
+
+\textbf{Sécurité} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Authentification JWT (access 15min, refresh 7j)
+    \item HTTPS obligatoire (TLS 1.3)
+    \item RBAC granulaire avec matrice permissions
+    \item Validation entrées (sanitization XSS, SQL injection)
+    \item Protection CSRF avec tokens
+    \item Rate limiting API (100 req/min/IP)
+    \item Chiffrement données sensibles (AES-256)
+    \item Audit logs actions critiques
+    \item Conformité RGPD (droit à l'oubli, export données)
+\end{itemize}
+\vspace{2pt}
+\end{minipage} & 
+\begin{minipage}[t]{3cm}
+\vspace{2pt}
+Penetration testing\\
+OWASP Top 10\\
+Audits sécurité\\
+Tests d'intrusion\\
+Scan vulnérabilités
+\vspace{2pt}
+\end{minipage} \\
+\hline
+
+\textbf{Scalabilité} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Architecture microservices modulaire
+    \item Base MongoDB avec sharding possible
+    \item Cache Redis distribué
+    \item Load balancing Nginx
+    \item Support horizontal scaling (ajout serveurs)
+    \item Gestion 10 000+ véhicules sans dégradation
+    \item CDN pour assets statiques
+\end{itemize}
+\vspace{2pt}
+\end{minipage} & 
+\begin{minipage}[t]{3cm}
+\vspace{2pt}
+Tests de montée en charge\\
+Métriques scaling\\
+Temps ajout capacity
+\vspace{2pt}
+\end{minipage} \\
+\hline
+
+\textbf{Disponibilité} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Uptime \textgreater 99\% (SLA)
+    \item Sauvegardes automatiques quotidiennes (retention 30j)
+    \item Plan de reprise d'activité (RPO \textless 1h, RTO \textless 4h)
+    \item Monitoring 24/7 avec alertes
+    \item Redondance serveurs (failover automatique)
+    \item Maintenance fenêtres planifiées (nuit, week-end)
+\end{itemize}
+\vspace{2pt}
+\end{minipage} & 
+\begin{minipage}[t]{3cm}
+\vspace{2pt}
+Logs uptime\\
+Incident reports\\
+MTTR / MTBF\\
+Test DR annuel
+\vspace{2pt}
+\end{minipage} \\
+\hline
+
+\textbf{Utilisabilité (UX)} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Interface intuitive (courbe apprentissage \textless 2h)
+    \item Design responsive (mobile-first)
+    \item Support multi-langues (FR, AR, EN)
+    \item Accessibilité WCAG 2.1 niveau AA
+    \item Feedback utilisateur instantané (toasts, confirmations)
+    \item Help contextuel et tooltips
+    \item Mode sombre disponible
+\end{itemize}
+\vspace{2pt}
+\end{minipage} & 
+\begin{minipage}[t]{3cm}
+\vspace{2pt}
+Tests utilisateurs\\
+SUS Score \textgreater 70\\
+Taux complétion tâches\\
+Enquêtes satisfaction
+\vspace{2pt}
+\end{minipage} \\
+\hline
+
+\textbf{Maintenabilité} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Code modulaire et commenté
+    \item Documentation technique complète (API, architecture)
+    \item Tests unitaires \textgreater 80\% couverture
+    \item Tests intégration et E2E automatisés
+    \item CI/CD pipeline (GitHub Actions)
+    \item Versioning sémantique (SemVer)
+    \item Logs structurés (Winston/Bunyan)
+\end{itemize}
+\vspace{2pt}
+\end{minipage} & 
+\begin{minipage}[t]{3cm}
+\vspace{2pt}
+Code coverage reports\\
+Complexité cyclomatique\\
+Code review metrics\\
+Time to fix bugs
+\vspace{2pt}
+\end{minipage} \\
+\hline
+
+\textbf{Compatibilité} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+\begin{itemize}[leftmargin=*,nosep]
+    \item Navigateurs: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+    \item Mobile: iOS 13+, Android 8+
+    \item APIs RESTful standards (OpenAPI 3.0)
+    \item WebSocket standard (RFC 6455)
+    \item Formats export standards (PDF, Excel, CSV, JSON)
+\end{itemize}
+\vspace{2pt}
+\end{minipage} & 
+\begin{minipage}[t]{3cm}
+\vspace{2pt}
+Tests multi-browsers\\
+Tests multi-devices\\
+Validation standards
+\vspace{2pt}
+\end{minipage} \\
+\hline
+
+\caption{Exigences non fonctionnelles détaillées}
+\end{longtable}
+
+\section{Pilotage du Projet avec Scrum}
+
+\subsection{Organisation de l'Équipe Scrum}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{3cm}|L{4cm}|X|}
+\hline
+\rowcolor{lightblue}
+\textbf{Rôle Scrum} & \textbf{Membre(s)} & \textbf{Responsabilités Détaillées} \\
+\hline
+\textbf{Product Owner} & Fehmi Kharroubi (CTO ExypnoTech) & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Définition et priorisation Product Backlog\\
+• Validation acceptation user stories\\
+• Interface avec stakeholders externes\\
+• Ajustement scope selon ROI\\
+• Participation Sprint Review\\
+• Décisions Go/No-Go fonctionnelles
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Scrum Master} & Rotation hebdomadaire équipe dev & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Animation cérémonies Scrum\\
+• Identification et suppression obstacles\\
+• Coach méthodologique équipe\\
+• Garant respect processus\\
+• Facilitation communication\\
+• Amélioration continue (rétrospectives)\\
+• Protection équipe des perturbations
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\textbf{Development Team} & 
+\begin{minipage}[t]{4cm}
+\vspace{2pt}
+• Wissal Bahri (Lead Dev)\\
+• Dev Backend (1)\\
+• Dev Frontend (1)
+\vspace{2pt}
+\end{minipage} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Implémentation user stories\\
+• Tests (unitaires, intégration, E2E)\\
+• Code reviews mutuelles\\
+• Documentation technique\\
+• Estimation collective (Planning Poker)\\
+• Auto-organisation\\
+• Participation toutes cérémonies\\
+• Qualité et excellence technique
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\end{tabularx}
+\caption{Composition et responsabilités de l'équipe Scrum}
+\end{table}
+
+\subsection{Product Backlog Complet}
+
+Le Product Backlog regroupe l'ensemble des user stories du projet, priorisées selon la valeur métier et réparties sur 6 sprints de 2 semaines chacun.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|C{1cm}|L{5.5cm}|C{1.5cm}|C{1.5cm}|C{2cm}|}
+\hline
+\rowcolor{lightgray}
+\textbf{ID} & \textbf{User Story} & \textbf{Sprint} & \textbf{Points} & \textbf{Priorité} \\
+\hline
+\multicolumn{5}{|c|}{\cellcolor{lightblue}\textbf{SPRINTS 1-2 : AUTHENTIFICATION \& GESTION UTILISATEURS (29 pts)}} \\
+\hline
+US1.1 & En tant qu'utilisateur, je souhaite m'inscrire pour créer mon compte & 1 & 5 & Critique \\
+\hline
+US1.2 & En tant qu'utilisateur, je souhaite me connecter pour accéder au système & 1 & 5 & Critique \\
+\hline
+US1.3 & En tant qu'utilisateur, je souhaite réinitialiser mon mot de passe en cas d'oubli & 1 & 3 & Haute \\
+\hline
+US2.1 & En tant qu'admin, je veux afficher la liste des utilisateurs & 2 & 3 & Haute \\
+\hline
+US2.2 & En tant qu'admin, je veux modifier les rôles et statuts utilisateurs & 2 & 5 & Critique \\
+\hline
+US2.3 & En tant qu'admin, je veux approuver ou rejeter les nouvelles inscriptions & 2 & 5 & Haute \\
+\hline
+US2.4 & En tant qu'utilisateur, je veux modifier mon profil personnel & 2 & 3 & Moyenne \\
+\hline
+\multicolumn{5}{|c|}{\cellcolor{lightgreen}\textbf{SPRINTS 3-4 : GESTION FLOTTE \& SUIVI TEMPS RÉEL (37 pts)}} \\
+\hline
+US3.1 & En tant qu'admin, je veux gérer les véhicules (CRUD complet) & 3 & 8 & Critique \\
+\hline
+US3.2 & En tant qu'admin, je veux gérer les chauffeurs et leurs documents & 3 & 8 & Critique \\
+\hline
+US3.3 & En tant qu'admin, je veux affecter un véhicule à un chauffeur disponible & 3 & 5 & Haute \\
+\hline
+US4.1 & En tant qu'admin, je veux suivre ma flotte sur carte en temps réel & 4 & 8 & Critique \\
+\hline
+US4.2 & En tant qu'admin, je veux consulter l'historique des trajets & 4 & 5 & Haute \\
+\hline
+US4.3 & En tant que chauffeur, je veux consulter mes missions assignées & 4 & 3 & Haute \\
+\hline
+\multicolumn{5}{|c|}{\cellcolor{lightyellow}\textbf{SPRINTS 5-6 : COMMUNICATION \& ANALYTICS (40 pts)}} \\
+\hline
+US5.1 & En tant qu'utilisateur, je veux échanger des messages en temps réel (1:1) & 5 & 8 & Haute \\
+\hline
+US5.2 & En tant qu'utilisateur, je veux créer et participer à des conversations de groupe & 5 & 5 & Moyenne \\
+\hline
+US5.3 & En tant qu'utilisateur, je veux recevoir et gérer des notifications pertinentes & 5 & 5 & Haute \\
+\hline
+US5.4 & En tant que chauffeur, je veux soumettre une demande de congé & 5 & 3 & Moyenne \\
+\hline
+US5.5 & En tant qu'admin, je veux valider ou rejeter les demandes de congé & 5 & 3 & Moyenne \\
+\hline
+US6.1 & En tant qu'admin, je veux générer des rapports d'activité personnalisés & 6 & 8 & Haute \\
+\hline
+US6.2 & En tant qu'admin, je veux consulter un tableau de bord avec KPI temps réel & 6 & 5 & Critique \\
+\hline
+US6.3 & En tant qu'utilisateur, je veux utiliser un chatbot pour obtenir de l'aide & 6 & 5 & Moyenne \\
+\hline
+\multicolumn{2}{|r|}{\textbf{TOTAL}} & \textbf{6} & \textbf{106} & \\
+\hline
+\end{tabularx}
+\caption{Product Backlog complet - 21 User Stories}
+\end{table}
+
+\subsection{Vélocité et Planification des Sprints}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|C{1.5cm}|L{3cm}|C{2cm}|C{2cm}|X|}
+\hline
+\rowcolor{primaryblue!30}
+\textbf{Sprint} & \textbf{Thématique} & \textbf{Durée} & \textbf{Points} & \textbf{Objectif Principal} \\
+\hline
+\textbf{1} & Authentification & 2 semaines & 13 & Mise en place du système d'authentification sécurisé (JWT) \\
+\hline
+\textbf{2} & Gestion Utilisateurs & 2 semaines & 16 & Workflow complet de gestion des comptes multi-rôles \\
+\hline
+\textbf{3} & Gestion Flotte & 2 semaines & 21 & CRUD véhicules/chauffeurs + système d'affectation \\
+\hline
+\textbf{4} & Suivi Temps Réel & 2 semaines & 16 & Carte interactive + tracking GPS + historique trajets \\
+\hline
+\textbf{5} & Communication & 2 semaines & 24 & Messagerie temps réel + notifications + gestion congés \\
+\hline
+\textbf{6} & Analytics \& IA & 2 semaines & 16 & Reporting avancé + tableaux de bord + chatbot \\
+\hline
+\multicolumn{2}{|r|}{\textbf{TOTAL PROJET}} & \textbf{12 semaines} & \textbf{106} & \textbf{Plateforme complète et opérationnelle} \\
+\hline
+\end{tabularx}
+\caption{Planification détaillée des 6 sprints}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8]
+    % Graphique de vélocité
+    \draw[->] (0,0) -- (13,0) node[right] {Sprints};
+    \draw[->] (0,0) -- (0,7) node[above] {Points};
+    
+    % Grille
+    \foreach \y in {0,1,2,3,4,5,6}
+        \draw[gray!30] (0,\y) -- (13,\y);
+    
+    % Barres de vélocité
+    \fill[lightblue] (1,0) rectangle (2,2.6);
+    \fill[lightblue] (3,0) rectangle (4,3.2);
+    \fill[lightblue] (5,0) rectangle (6,4.2);
+    \fill[lightblue] (7,0) rectangle (8,3.2);
+    \fill[lightblue] (9,0) rectangle (10,4.8);
+    \fill[lightblue] (11,0) rectangle (12,3.2);
+    
+    % Ligne de vélocité moyenne
+    \draw[red, thick, dashed] (0,3.5) -- (13,3.5) node[right] {Vélocité moyenne: 17.7 pts};
+    
+    % Labels sprints
+    \node at (1.5,-0.5) {S1};
+    \node at (3.5,-0.5) {S2};
+    \node at (5.5,-0.5) {S3};
+    \node at (7.5,-0.5) {S4};
+    \node at (9.5,-0.5) {S5};
+    \node at (11.5,-0.5) {S6};
+    
+    % Valeurs
+    \node[above] at (1.5,2.6) {13};
+    \node[above] at (3.5,3.2) {16};
+    \node[above] at (5.5,4.2) {21};
+    \node[above] at (7.5,3.2) {16};
+    \node[above] at (9.5,4.8) {24};
+    \node[above] at (11.5,3.2) {16};
+\end{tikzpicture}
+\caption{Graphique de vélocité prévisionnelle par sprint}
+\end{figure}
+
+\section{Diagramme de Cas d'Utilisation Global}
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.95\textwidth]{use_case_diagram.png}}
+    \caption{Diagramme des cas d'utilisation principaux du système FleetPulse}
+\end{figure}
+
+\begin{keyfeaturebox}
+\textbf{Synthèse des Cas d'Utilisation par Acteur :}
+
+\textbf{Super Administrateur :}
+\begin{itemize}[nosep]
+    \item Gérer les comptes entreprises et utilisateurs
+    \item Superviser l'ensemble de la plateforme
+    \item Accéder aux rapports consolidés multi-entreprises
+    \item Configurer les paramètres système globaux
+    \item Consulter les audit logs
+\end{itemize}
+
+\textbf{Administrateur / Manager :}
+\begin{itemize}[nosep]
+    \item Gérer les véhicules et chauffeurs
+    \item Planifier et suivre les trajets
+    \item Valider les congés et traiter les réclamations
+    \item Consulter les tableaux de bord et rapports
+    \item Communiquer avec l'équipe
+\end{itemize}
+
+\textbf{Chauffeur :}
+\begin{itemize}[nosep]
+    \item Consulter les trajets assignés
+    \item Mettre à jour le profil personnel
+    \item Soumettre des demandes de congé
+    \item Échanger via la messagerie interne
+    \item Utiliser le chatbot d'assistance
+\end{itemize}
+
+\textbf{Fonctionnalités Communes :}
+\begin{itemize}[nosep]
+    \item S'authentifier de manière sécurisée
+    \item Échanger des messages en temps réel
+    \item Recevoir et gérer les notifications
+    \item Consulter l'aide contextuelle et le chatbot
+\end{itemize}
+\end{keyfeaturebox}
+
+\section{Architecture du Système}
+
+\subsection{Architecture Physique (Déploiement)}
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.95\textwidth]{phy.png}}
+    \caption{Architecture physique et infrastructure de déploiement}
+\end{figure}
+
+\subsubsection{Description des Couches}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{3cm}|X|L{3cm}|}
+\hline
+\rowcolor{lightblue}
+\textbf{Couche} & \textbf{Composants et Technologies} & \textbf{Responsabilités} \\
+\hline
+\textbf{Présentation (Client)} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• React.js 18+ avec TypeScript\\
+• Redux Toolkit (state management)\\
+• Material-UI / Tailwind CSS\\
+• Socket.io-client (WebSocket)\\
+• Axios (HTTP client)\\
+• React Router v6\\
+• Recharts / Chart.js (visualisations)
+\vspace{2pt}
+\end{minipage} & 
+Interface utilisateur responsive, gestion état local, communication API \\
+\hline
+\textbf{Application (Backend)} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Node.js 18 LTS\\
+• Express.js 4.x (API REST)\\
+• Socket.IO (temps réel)\\
+• JWT (authentification)\\
+• Multer (upload fichiers)\\
+• Winston (logging)\\
+• Node-cron (planification)
+\vspace{2pt}
+\end{minipage} & 
+Logique métier, orchestration services, API RESTful, WebSocket server \\
+\hline
+\textbf{Services Externes} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Google Maps API (cartographie)\\
+• Google Directions API (itinéraires)\\
+• Nodemailer + SMTP (emails)\\
+• Cloudinary (stockage images)\\
+• Flask (microservice chatbot IA)
+\vspace{2pt}
+\end{minipage} & 
+Fonctionnalités spécialisées externalisées \\
+\hline
+\textbf{Données} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• MongoDB 6.x (base principale)\\
+• Redis 7.x (cache + sessions)\\
+• Mongoose ODM\\
+• Index géospatiaux (2dsphere)
+\vspace{2pt}
+\end{minipage} & 
+Persistance données, cache performance, stockage sessions \\
+\hline
+\textbf{Infrastructure} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Docker (containerisation)\\
+• Nginx (reverse proxy, load balancer)\\
+• GitHub Actions (CI/CD)\\
+• Render / Heroku (hébergement)
+\vspace{2pt}
+\end{minipage} & 
+Déploiement, scaling, monitoring, sécurité réseau \\
+\hline
+\end{tabularx}
+\caption{Détail des couches de l'architecture physique}
+\end{table}
+
+\subsection{Architecture Logique (MVC)}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=2cm,
+    box/.style={rectangle, draw, fill=lightblue, text width=3cm, text centered, rounded corners, minimum height=1cm},
+    arrow/.style={->, >=stealth, thick}
+]
+    % Couche View
+    \node[box, fill=lightgreen] (view) {VIEW\\React Components};
+    
+    % Couche Controller
+    \node[box, below of=view, fill=lightyellow] (controller) {CONTROLLER\\Express Routes};
+    
+    % Couche Model
+    \node[box, below of=controller, fill=lightblue] (model) {MODEL\\Mongoose Schemas};
+    
+    % Couche Services
+    \node[box, right of=controller, xshift=3cm] (services) {SERVICES\\Business Logic};
+    
+    % Base de données
+    \node[box, below of=model, fill=lightgray] (db) {DATABASE\\MongoDB};
+    
+    % Flèches
+    \draw[arrow] (view) -- (controller) node[midway, right] {Requêtes HTTP};
+    \draw[arrow] (controller) -- (view) node[midway, left] {Réponses JSON};
+    \draw[arrow] (controller) -- (model) node[midway, right] {Query/Update};
+    \draw[arrow] (model) -- (controller) node[midway, left] {Documents};
+    \draw[arrow] (controller) -- (services);
+    \draw[arrow] (services) -- (controller);
+    \draw[arrow] (model) -- (db);
+    \draw[arrow] (db) -- (model);
+\end{tikzpicture}
+\caption{Architecture logique MVC de FleetPulse}
+\end{figure}
+
+\subsubsection{Détail des Composants MVC}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{2.5cm}|L{4cm}|X|}
+\hline
+\rowcolor{lightgreen}
+\textbf{Couche} & \textbf{Modules Principaux} & \textbf{Responsabilités} \\
+\hline
+\textbf{Models} & 
+\begin{minipage}[t]{4cm}
+\vspace{2pt}
+• User\\
+• Vehicle\\
+• Driver\\
+• Trip\\
+• Message\\
+• Notification\\
+• Leave\\
+• Complaint\\
+• Report
+\vspace{2pt}
+\end{minipage} & 
+Définition schémas MongoDB, validations Mongoose, relations entre entités, méthodes métier, hooks (pre/post save) \\
+\hline
+\textbf{Views} & 
+\begin{minipage}[t]{4cm}
+\vspace{2pt}
+• Pages (Dashboard, Fleet, Map)\\
+• Components (Forms, Tables)\\
+• Layouts (Auth, Admin)\\
+• Hooks personnalisés\\
+• Context providers
+\vspace{2pt}
+\end{minipage} & 
+Présentation UI, interaction utilisateur, état local React, appels API, routing, responsive design \\
+\hline
+\textbf{Controllers} & 
+\begin{minipage}[t]{4cm}
+\vspace{2pt}
+• AuthController\\
+• UserController\\
+• VehicleController\\
+• TripController\\
+• MessageController\\
+• ReportController
+\vspace{2pt}
+\end{minipage} & 
+Réception requêtes HTTP, validation données, orchestration logique métier, appel services, formatage réponses, gestion erreurs \\
+\hline
+\textbf{Services} & 
+\begin{minipage}[t]{4cm}
+\vspace{2pt}
+• EmailService\\
+• NotificationService\\
+• MapService\\
+• ReportService\\
+• ChatbotService\\
+• UploadService
+\vspace{2pt}
+\end{minipage} & 
+Logique métier réutilisable, intégration APIs externes, calculs complexes, génération documents, traitement asynchrone \\
+\hline
+\end{tabularx}
+\caption{Détail des composants de l'architecture MVC}
+\end{table}
+
+\section{Environnements de Travail}
+
+\subsection{Environnement Matériel}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{3.5cm}|X|L{3cm}|}
+\hline
+\rowcolor{lightgray}
+\textbf{Composant} & \textbf{Spécifications} & \textbf{Usage} \\
+\hline
+\textbf{Poste Développement} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• Processeur: Intel Core i7 / AMD Ryzen 7\\
+• RAM: 16 GB DDR4\\
+• Stockage: 512 GB SSD NVMe\\
+• OS: Windows 11 / macOS / Linux
+\vspace{2pt}
+\end{minipage} & 
+Développement, tests locaux, IDE \\
+\hline
+\textbf{Serveur Test/Staging} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• VPS 4 vCPU, 8 GB RAM\\
+• 100 GB SSD\\
+• Ubuntu Server 22.04 LTS\\
+• Docker + Docker Compose
+\vspace{2pt}
+\end{minipage} & 
+Tests intégration, démo client \\
+\hline
+\textbf{Serveur Production} & 
+\begin{minipage}[t]{\linewidth}
+\vspace{2pt}
+• VPS 8 vCPU, 16 GB RAM\\
+• 200 GB SSD + backups\\
+• Load balancer\\
+• SSL/TLS (Let's Encrypt)
+\vspace{2pt}
+\end{minipage} & 
+Déploiement final \\
+\hline
+\end{tabularx}
+\caption{Environnement matériel du projet}
+\end{table}
+
+\subsection{Environnement Logiciel}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|L{3cm}|L{3.5cm}|X|}
+\hline
+\rowcolor{primaryblue!30}
+\textbf{Catégorie} & \textbf{Outil / Technologie} & \textbf{Description et Usage} \\
+\hline
+\textbf{IDE Principal} & Visual Studio Code 1.85+ & 
+Éditeur de code avec extensions: ESLint, Prettier, GitLens, REST Client, MongoDB, React Snippets \\
+\hline
+\textbf{Versioning} & Git 2.40+ / GitHub & 
+Gestion de version distribuée, collaboration équipe, branches (develop, feature/*, release/*, hotfix/*) \\
+\hline
+\textbf{Tests API} & Postman 10.x & 
+Test manuel endpoints REST, collections organisées, environnements (dev, staging, prod), documentation API \\
+\hline
+\textbf{Base de Données GUI} & MongoDB Compass 1.40+ & 
+Interface graphique MongoDB, visualisation collections, requêtes interactives, gestion index \\
+\hline
+\textbf{Cache/Sessions GUI} & Redis Commander & 
+Monitoring Redis, inspection clés, debug sessions, flush cache \\
+\hline
+\textbf{Debug Browser} & Chrome DevTools & 
+Inspection DOM, debug JavaScript, profilage performance, network monitoring, application storage \\
+\hline
+\textbf{Design/Prototypage} & Figma / Adobe XD & 
+Maquettes UI/UX, prototypes interactifs, design system, collaboration designers \\
+\hline
+\textbf{Diagrammes UML} & StarUML / Draw.io & 
+Diagrammes de classes, séquence, cas d'utilisation, architecture \\
+\hline
+\textbf{Documentation} & Swagger/OpenAPI 3.0 & 
+Documentation API interactive, génération automatique, tests in-browser \\
+\hline
+\textbf{Communication} & Slack / Microsoft Teams & 
+Communication équipe, canaux par feature, intégrations GitHub/CI \\
+\hline
+\textbf{Gestion Projet} & Jira / Trello & 
+Backlog Scrum, sprints, burndown charts, suivi tâches, reporting \\
+\hline
+\end{tabularx}
+\caption{Environnement logiciel et outils de développement}
+\end{table}
+
+\subsection{Stack Technologique Complète}
+
+\begin{longtable}{|L{3cm}|L{3.5cm}|X|L{2cm}|}
+\hline
+\rowcolor{accentgreen!30}
+\textbf{Domaine} & \textbf{Technologie} & \textbf{Rôle et Justification} & \textbf{Version} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{accentgreen!30}
+\textbf{Domaine} & \textbf{Technologie} & \textbf{Rôle et Justification} & \textbf{Version} \\
+\hline
+\endhead
+
+\multicolumn{4}{|c|}{\cellcolor{lightblue}\textbf{FRONTEND}} \\
+\hline
+Framework & React.js & Framework UI moderne, composants réutilisables, écosystème riche, performance (Virtual DOM) & 18.2+ \\
+\hline
+Langage & TypeScript & Typage statique, réduction bugs, meilleure maintenabilité, autocomplétion IDE & 5.0+ \\
+\hline
+State Management & Redux Toolkit & Gestion état centralisé, DevTools puissants, middleware async (Thunk), scalable & 2.0+ \\
+\hline
+Routing & React Router & Navigation SPA, routes protégées, lazy loading, nested routes & 6.x \\
+\hline
+HTTP Client & Axios & Requêtes HTTP, intercepteurs (tokens), gestion erreurs, support TypeScript & 1.6+ \\
+\hline
+WebSocket Client & Socket.io-client & Communication bidirectionnelle temps réel, reconnexion automatique & 4.6+ \\
+\hline
+UI Components & Material-UI (MUI) & Bibliothèque composants Material Design, thèmes personnalisables, accessibilité & 5.14+ \\
+\hline
+Styling & Tailwind CSS & Utility-first CSS, rapid prototyping, design system cohérent, purge auto & 3.4+ \\
+\hline
+Forms & Formik + Yup & Gestion formulaires complexes, validation déclarative, réduction boilerplate & 2.4+ / 1.3+ \\
+\hline
+Maps & Leaflet.js & Cartographie interactive open-source, plugins riches, intégration React & 1.9+ \\
+\hline
+Charts & Recharts & Graphiques React natifs, responsive, personnalisables, déclaratifs & 2.10+ \\
+\hline
+\multicolumn{4}{|c|}{\cellcolor{lightgreen}\textbf{BACKEND}} \\
+\hline
+Runtime & Node.js & JavaScript côté serveur, non-bloquant, écosystème NPM, performance V8 & 18 LTS \\
+\hline
+Framework & Express.js & Framework web minimaliste, middleware flexibles, large adoption, performant & 4.18+ \\
+\hline
+Langage & JavaScript (ES6+) & Standard moderne, async/await, modules ES, compatibilité Node & ES2022 \\
+\hline
+Database & MongoDB & NoSQL document-oriented, schéma flexible, scalabilité horizontale, géospatial & 6.0+ \\
+\hline
+ODM & Mongoose & Modélisation données MongoDB, validation, middleware, relations & 8.0+ \\
+\hline
+Cache & Redis & In-memory data store, sessions, cache API, pub/sub, haute performance & 7.2+ \\
+\hline
+Authentication & jsonwebtoken (JWT) & Tokens stateless, sécurisés, standard industrie, refresh strategy & 9.0+ \\
+\hline
+Password Hashing & bcrypt & Algorithme de hachage sécurisé, salt automatique, résistant brute-force & 5.1+ \\
+\hline
+Validation & express-validator & Validation/sanitization entrées, protection injections, middleware Express & 7.0+ \\
+\hline
+File Upload & Multer & Middleware upload multipart/form-data, filtres types, limites taille & 1.4+ \\
+\hline
+Email & Nodemailer & Envoi emails transactionnels, templates HTML, pièces jointes, SMTP/API & 6.9+ \\
+\hline
+Logging & Winston & Logging structuré, niveaux multiples, transports configurables, rotation & 3.11+ \\
+\hline
+WebSocket & Socket.IO & Communication bidirectionnelle temps réel, rooms, namespaces, fallback polling & 4.6+ \\
+\hline
+Job Scheduling & node-cron & Tâches planifiées (rapports, notifications), syntaxe cron, timezone support & 3.0+ \\
+\hline
+\multicolumn{4}{|c|}{\cellcolor{lightyellow}\textbf{IA / CHATBOT}} \\
+\hline
+Framework & Flask & Microframework Python léger, API REST simple, intégration NLP & 3.0+ \\
+\hline
+NLP & spaCy / NLTK & Traitement langage naturel, détection intentions, entités nommées & 3.7+ \\
+\hline
+\multicolumn{4}{|c|}{\cellcolor{lightgray}\textbf{DEVOPS / DÉPLOIEMENT}} \\
+\hline
+Containerisation & Docker & Isolation environnements, reproductibilité, portabilité, multi-services & 24.x \\
+\hline
+Orchestration & Docker Compose & Gestion multi-containers, réseaux, volumes, configuration déclarative & 2.x \\
+\hline
+Reverse Proxy & Nginx & Load balancing, SSL termination, serving static, compression gzip & 1.24+ \\
+\hline
+CI/CD & GitHub Actions & Pipelines automatisés (tests, build, deploy), intégration GitHub native & - \\
+\hline
+Hosting & Render / Heroku & PaaS cloud, déploiement simplifié, scaling automatique, monitoring & - \\
+\hline
+\multicolumn{4}{|c|}{\cellcolor{lightblue}\textbf{TESTS}} \\
+\hline
+Tests Unitaires Backend & Jest & Framework de test Node.js, mocking, coverage, assertions & 29.x \\
+\hline
+Tests Intégration API & Supertest & Tests HTTP endpoints Express, assertions réponses, middlewares & 6.3+ \\
+\hline
+Tests Unitaires Frontend & React Testing Library & Tests composants React, accessibility, user interactions & 14.x \\
+\hline
+Tests E2E & Cypress & Tests end-to-end, simulation utilisateur réelle, screenshots/videos & 13.x \\
+\hline
+
+\caption{Stack technologique complète du projet FleetPulse}
+\end{longtable}
+
+\section*{Conclusion}
+
+Ce chapitre a permis de détailler exhaustivement les exigences et la structure du projet \textbf{FleetPulse}, depuis l'identification précise des acteurs et de leurs besoins jusqu'à la planification agile détaillée et l'architecture technique complète.
+
+Les points clés de ce chapitre incluent :
+\begin{enumerate}
+    \item \textbf{Analyse des acteurs :} Trois profils utilisateurs clairement définis avec permissions granulaires (RBAC)
+    \item \textbf{Spécification des besoins :} 36 besoins fonctionnels et 8 catégories de besoins non fonctionnels rigoureusement documentés
+    \item \textbf{Planification Scrum :} Product Backlog de 21 user stories (106 points) répartis sur 6 sprints de 2 semaines
+    \item \textbf{Architecture système :} Modèle MVC robuste avec stack
